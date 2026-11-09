@@ -1,0 +1,49 @@
+oh_rome
+
+This product is an ArkTS port of ROME (https://github.com/rometools/rome), licensed under the
+Apache License, Version 2.0. Files ported from ROME name their source file in their first line.
+
+Copyright notices carried over from the ROME sources:
+
+Copyright 2004 Sun Microsystems, Inc.
+Copyright 2005 Robert Cooper, Temple of the Screaming Penguin
+Copyright 2005 Sun Microsystems, Inc.
+Copyright 2006 Marc Wick, geonames.org
+Copyright 2006 Nathanial X. Freitas, openvision.tv
+Copyright 2006 Robert Cooper, Temple of the Screaming Penguin
+Copyright 2007 Marc Wick, geonames.org
+Copyright 2011 ROME Team
+Copyright 2011 The ROME Team
+Copyright 2011 robert.cooper.
+Copyright 2018 Maximilian Irro
+
+The XML writer and the XML validation follow the code of JDOM 2.0.6.1 (http://www.jdom.org/):
+oh_rome/src/main/ets/xml/XmlOutputter.ets, oh_rome/src/main/ets/xml/Format.ets,
+oh_rome/src/main/ets/xml/Verifier.ets and oh_rome/src/main/ets/xml/Document.ets are under the JDOM license in
+LICENSE-JDOM.
+This product includes software developed by the JDOM Project (http://www.jdom.org/).
+
+The XML parser follows the code of Apache Xerces Java as distributed in OpenJDK 17 (module java.xml), licensed under
+the Apache License, Version 2.0: oh_rome/src/main/ets/xml/XmlScanner.ets and oh_rome/src/main/ets/xml/XmlEntities.ets
+(from XMLEntityScanner.java, XMLScanner.java, XMLDTDScannerImpl.java, XMLEntityManager.java, XMLChar.java and
+XML11Char.java), and oh_rome/src/main/ets/xml/XmlParser.ets (from XMLDocumentScannerImpl.java,
+XMLDocumentFragmentScannerImpl.java and XMLNSDocumentScannerImpl.java). Notices carried over from those sources:
+
+Copyright (c) 2003, 2021, Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2003, 2020, Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2009, 2021, Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2003, 2018, Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2003, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Apache Xerces Java
+Copyright 1999-2022 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+Portions of this software were originally based on the following:
+- software copyright (c) 1999, IBM Corporation., http://www.ibm.com.
+- software copyright (c) 1999, Sun Microsystems., http://www.sun.com.
+- voluntary contributions made by Paul Eng on behalf of the
+Apache Software Foundation that were originally developed at iClick, Inc.,
+software copyright (c) 1999.

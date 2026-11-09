@@ -1,0 +1,13 @@
+{
+  "module": {
+    "name": "oh_rome_test",
+    "type": "feature",
+    "deviceTypes": [
+      "default",
+      "tablet",
+      "wearable"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false
+  }
+}

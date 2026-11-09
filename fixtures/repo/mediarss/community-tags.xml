@@ -1,0 +1,9 @@
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>tags</title><link>http://x.com/</link><description>d</description>
+<item><title>a</title><media:community><media:tags>news: 5, abc:3</media:tags></media:community></item>
+<item><title>b</title><media:community><media:tags>a , b,, c :5 , :3,d: x ,e:  7 , ,</media:tags></media:community></item>
+<item><title>c</title><media:community><media:tags></media:tags></media:community></item>
+<item><title>d</title><media:community><media:tags>   	 </media:tags></media:community></item>
+<item><title>e</title><media:community><media:tags>a        b , c	:	2:9,  ,x:</media:tags></media:community></item>
+<item><title>f</title><media:community><media:tags>,,lead,trail,,</media:tags></media:community></item>
+<item><title>g</title><media:community><media:tags>one&#xA0;, two&#xA0;,&#xA0;three : 4</media:tags></media:community></item>
+</channel></rss>

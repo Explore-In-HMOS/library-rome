@@ -1,0 +1,11 @@
+{
+  "module": {
+    "name": "oh_rome",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet",
+      "wearable"
+    ]
+  }
+}

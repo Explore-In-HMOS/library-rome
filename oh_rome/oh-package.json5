@@ -1,0 +1,18 @@
+{
+  "name": "oh_rome",
+  "version": "1.0.0",
+  "description": "RSS, Atom and OPML parsing, generation and conversion for HarmonyOS: an ArkTS port of the ROME Java library.",
+  "keywords": ["rss", "atom", "opml", "feed", "syndication", "rome", "xml", "podcast", "harmonyos", "openharmony"],
+  "main": "Index.ets",
+  "author": {
+    "name": "oh_rome contributors",
+    "url": "https://github.com/Explore-In-HMOS/library-rome"
+  },
+  "homepage": "https://github.com/Explore-In-HMOS/library-rome",
+  "repository": "https://github.com/Explore-In-HMOS/library-rome",
+  "bugs": {
+    "url": "https://github.com/Explore-In-HMOS/library-rome/issues"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {}
+}

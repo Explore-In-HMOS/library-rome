@@ -1,0 +1,887 @@
+### empty root
+<a/>
+### xml declaration is not a node
+<?xml version="1.0" encoding="UTF-8"?>
+<a></a>
+### declaration with standalone
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?><a/>
+### nested text and whitespace kept
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+  </channel>
+</rss>
+### whitespace outside root dropped
+  
+<a>x</a>
+  
+### comments and PIs at document level
+<!-- before -->
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<a><!-- inside --><?pi some data?></a>
+<!-- after -->
+<?after?>
+### PI without data
+<a><?target?></a>
+### PI data whitespace
+<a><?target    data with   spaces   ?></a>
+### attributes in order
+<a z="1" b="2" m="3"/>
+### attribute single quotes
+<a x='it"s'/>
+### attribute whitespace normalization
+<a x="a{TAB}b
+c  d"/>
+### attribute char refs not normalized
+<a x="a&#9;b&#10;c&#13;d"/>
+### attribute entities
+<a x="&lt;&gt;&amp;&quot;&apos;"/>
+### text predefined entities and char refs
+<a>&lt;b&gt; &amp; &quot;q&quot; &apos;s&apos; &#65;&#x42;&#x1F600;</a>
+### CRLF normalized in text
+<a>line1{CR}
+line2{CR}line3</a>
+### CRLF normalized in attribute
+<a x="1{CR}
+2"/>
+### char ref CR kept in text
+<a>x&#13;y</a>
+### CDATA node
+<a><![CDATA[<b>bold</b> & stuff]]></a>
+### text CDATA text
+<a>before<![CDATA[inside]]>after</a>
+### two CDATA sections
+<a><![CDATA[one]]><![CDATA[two]]></a>
+### empty CDATA
+<a>x<![CDATA[]]>y</a>
+### CDATA with brackets
+<a><![CDATA[a]]b]>c]]></a>
+### comment splits text
+<a>x<!--c-->y</a>
+### default namespace
+<feed xmlns="http://www.w3.org/2005/Atom"><title>t</title></feed>
+### default namespace not on attributes
+<feed xmlns="http://www.w3.org/2005/Atom"><link href="h" rel="alternate"/></feed>
+### prefixed namespaces
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><dc:creator>me</dc:creator><content:encoded><![CDATA[<p>hi</p>]]></content:encoded></channel></rss>
+### prefixed root declares itself
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/"><channel rdf:about="x"/></rdf:RDF>
+### namespace redeclared on child
+<a xmlns:p="urn:one"><p:b xmlns:p="urn:two"><p:c/></p:b><p:d/></a>
+### default namespace undeclared
+<a xmlns="urn:x"><b xmlns=""><c/></b></a>
+### namespaced attribute
+<a xmlns:x="urn:x" x:attr="v" plain="w"/>
+### xml prefix attribute
+<a xml:lang="en" xml:base="http://example.com/"/>
+### unused declarations kept
+<a xmlns:u="urn:unused" xmlns:v="urn:v"><v:b/></a>
+### element and attribute same prefix
+<x:a xmlns:x="urn:x" x:k="1"/>
+### mixed content
+<p>Hello <b>bold</b> and <i>italic</i>.</p>
+### unicode text
+<a>çğışöü 日本語 €</a>
+### gt in text allowed
+<a>a > b</a>
+### long realistic rss item
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<atom:link href="http://example.com/feed" rel="self" type="application/rss+xml" />
+<item>
+<title>A &amp; B</title>
+<description>&lt;p&gt;html&lt;/p&gt;</description>
+<pubDate>Mon, 02 Nov 2026 10:00:00 GMT</pubDate>
+<guid isPermaLink="false">id-1</guid>
+<enclosure url="http://example.com/a.mp3" length="123" type="audio/mpeg"/>
+</item>
+</channel>
+</rss>
+### error undeclared entity
+<a>&nbsp;</a>
+### error undeclared entity in attribute
+<a x="&nbsp;"/>
+### error mismatched end tag
+<a><b></a>
+### error unclosed root
+<a><b></b>
+### error content after root
+<a/><b/>
+### error text after root
+<a/>junk
+### error content before root
+junk<a/>
+### error empty document
+
+### error only whitespace
+   
+### error unbound element prefix
+<x:a/>
+### error unbound attribute prefix
+<a x:y="1"/>
+### error duplicate attribute
+<a x="1" x="2"/>
+### error duplicate namespaced attribute
+<a xmlns:p="urn:p" xmlns:q="urn:p" p:x="1" q:x="2"/>
+### error lt in attribute
+<a x="<"/>
+### error unquoted attribute
+<a x=1/>
+### error missing attribute value
+<a x/>
+### error bare ampersand
+<a>a & b</a>
+### error cdata end in text
+<a>a ]]> b</a>
+### error invalid char ref
+<a>&#0;</a>
+### error invalid char
+<a>{CR}x</a>junk
+### error doctype disallowed
+<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
+<rss version="0.91"/>
+### error xml decl not at start
+ <?xml version="1.0"?><a/>
+### error reserved pi target
+<a><?xml foo?></a>
+### error double hyphen in comment
+<a><!-- a -- b --></a>
+### error unterminated comment
+<a><!-- a </a>
+### error unterminated cdata
+<a><![CDATA[x</a>
+### error bad element name
+<1a/>
+### error line number on third line
+<a>
+<b>
+<c></b>
+</a>
+### error nested lt
+<a><<b/></a>
+### error end tag only
+</a>
+### doctype allowed with public id
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"
+                     "http://my.netscape.com/publish/formats/rss-0.91.dtd">
+<rss version="0.91"><channel><title>x</title></channel></rss>
+### doctype allowed system only !doctypes
+<!DOCTYPE a SYSTEM "a.dtd"><a/>
+### doctype allowed no ids !doctypes
+<!DOCTYPE a><a/>
+### doctype allowed undeclared entity with external dtd !doctypes
+<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
+<rss><d>a&nbsp;b&amp;c</d></rss>
+### doctype allowed undeclared entity without external dtd !doctypes
+<!DOCTYPE a><a>&nbsp;</a>
+### doctype internal entity in text !doctypes
+<!DOCTYPE a [<!ENTITY me "Emin">]><a>hi &me;!</a>
+### doctype internal entity in attribute !doctypes
+<!DOCTYPE a [<!ENTITY me "Emin">]><a x="hi &me;!"/>
+### doctype billion laughs disallowed
+<?xml version="1.0"?>
+<!DOCTYPE lolz [
+ <!ENTITY lol "lol">
+ <!ENTITY lol1 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+]>
+<feed><title>&lol1;</title></feed>
+### error doctype after root !doctypes
+<a/><!DOCTYPE a>
+### error two doctypes !doctypes
+<!DOCTYPE a><!DOCTYPE a><a/>
+### bom char at start
+﻿<a/>
+### inv text
+<a>x{U+1}y</a>
+### inv attr
+<a x="{U+1}"/>
+### inv comment
+<a><!--{U+1}--></a>
+### inv cdata
+<a><![CDATA[{U+1}]]></a>
+### inv pi
+<a><?p {U+1}?></a>
+### inv prolog
+{U+1}<a/>
+### inv fffe
+<a>{U+FFFE}</a>
+### charref surrogate
+<a>&#xD800;</a>
+### charref too big
+<a>&#x110000;</a>
+### charref bad
+<a>&#xZZ;</a>
+### charref decimal bad
+<a>&#12a;</a>
+### charref no semicolon
+<a>&#65 </a>
+### entity no semicolon
+<a>&amp </a>
+### attr no space
+<a x="1"y="2"/>
+### end tag space
+<a></a >
+### end tag space error
+<a></ a>
+### empty elem space
+<a / >
+### double colon name
+<a:b:c xmlns:a="urn:a"/>
+### xmlns empty prefix decl
+<a xmlns:p=""/>
+### xmlns xml prefix redeclare
+<a xmlns:xml="urn:wrong"/>
+### xmlns prefix used as attr
+<a xmlns:p="urn:p"><b p="1"/></a>
+### lt in attr via entity
+<a x="&lt;"/>
+### surrogate pair text
+<a>😀</a>
+### cdata outside root
+<![CDATA[x]]><a/>
+### decl twice
+<?xml version="1.0"?><?xml version="1.0"?><a/>
+### decl no version
+<?xml encoding="UTF-8"?><a/>
+### decl bad version
+<?xml version="2.0"?><a/>
+### decl version 1.1
+<?xml version="1.1"?><a/>
+### pi no space before data
+<a><?p?d?></a>
+### comment triple dash end
+<a><!-- x ---></a>
+### comment empty
+<a><!----></a>
+### unterminated pi
+<a><?p x</a>
+### unterminated start tag
+<a
+### unterminated attr
+<a x="1
+### unterminated end tag
+<a></a
+### eof in content
+<a>text
+### line count crlf
+<a>{CR}
+{CR}
+<b></c></a>
+### error after long lines
+<a>
+  <b>ok</b>
+  <c x="1" y="2"></d>
+</a>
+### attr billion !doctypes
+<!DOCTYPE lolz [
+ <!ENTITY lol "lol">
+ <!ENTITY lol1 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+ <!ENTITY lol2 "&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;">
+ <!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">
+ <!ENTITY lol4 "&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;">
+ <!ENTITY lol5 "&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;">
+]>
+<feed t="&lol5;"/>
+### entity recursion !doctypes
+<!DOCTYPE a [<!ENTITY x "&y;"><!ENTITY y "&x;">]><a>&x;</a>
+### entity recursion attr !doctypes
+<!DOCTYPE a [<!ENTITY x "&y;"><!ENTITY y "&x;">]><a v="&x;"/>
+### entity lt in attr !doctypes
+<!DOCTYPE a [<!ENTITY x "a<b">]><a v="&x;"/>
+### entity attr charref !doctypes
+<!DOCTYPE a [<!ENTITY x "a&#38;#60;b">]><a v="&x;"/>
+### entity amp in attr !doctypes
+<!DOCTYPE a [<!ENTITY x "a&amp;b">]><a v="&x;"/>
+### entity markup in content no text !doctypes
+<!DOCTYPE a [<!ENTITY x "<b/>">]><a>&x;</a>
+### doctype with internal and external !doctypes
+<!DOCTYPE a SYSTEM "a.dtd" [<!ENTITY x "y">]><a>&x;&undeclared;</a>
+### doctype pe !doctypes
+<!DOCTYPE a [<!ENTITY % p "x">]><a/>
+### doctype bad decl !doctypes
+<!DOCTYPE a [<!FOO>]><a/>
+### doctype public no system !doctypes
+<!DOCTYPE a PUBLIC "p"><a/>
+### entity single quoted !doctypes
+<!DOCTYPE a [<!ENTITY x 'it"s'>]><a v="&x;">&x;</a>
+### entity declared twice !doctypes
+<!DOCTYPE a [<!ENTITY x "one"><!ENTITY x "two">]><a v="&x;"/>
+### predefined redeclared !doctypes
+<!DOCTYPE a [<!ENTITY amp "&#38;#38;">]><a>&amp;</a>
+### entity in content before root
+&amp;<a/>
+### unparsed entity ref !doctypes
+<!DOCTYPE a [<!NOTATION n SYSTEM "n"><!ENTITY x SYSTEM "x" NDATA n>]><a>&x;</a>
+### entity text leaks after ref !doctypes
+<!DOCTYPE a [<!ENTITY e "abc">]><a>X&e;Y&e;&e;<b>&e;</b>&e;<![CDATA[q]]></a>
+### entity empty value !doctypes
+<!DOCTYPE a [<!ENTITY e "">]><a>x&e;y</a>
+### external entity declared !doctypes
+<!DOCTYPE a [<!ENTITY e SYSTEM "file:///etc/hosts">]><a>&e;</a>
+### undeclared entities with external subset !doctypes
+<!DOCTYPE a SYSTEM "x.dtd"><a v="&foo;">p&foo;q&bar;r</a>
+### nested entity with reference !doctypes
+<!DOCTYPE a [<!ENTITY i "in"><!ENTITY e "A&i;B">]><a v="&e;">&e;</a>
+### empty cdata first
+<a><![CDATA[]]>y</a>
+### empty cdata after cdata
+<a><![CDATA[x]]><![CDATA[]]>y</a>
+### text empty cdata comment
+<a>x<![CDATA[]]><!--c-->y</a>
+### charref before cdata
+<a>&amp;<![CDATA[x]]></a>
+### text around comment
+<a>  <!--c-->  </a>
+### cdata crlf
+<a><![CDATA[a{CR}
+b{CR}c]]></a>
+### comment and pi crlf
+<a><!--a{CR}
+b--><?p a{CR}
+b?></a>
+### end tag bad delimiter
+<a></a x>
+### deep nesting
+<a><a><a><a><a><a><a><a><a><a><a><a><a><a><a><a><a><a><a><a>deep</a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a>
+### decimal charref missing digits
+<a>&#;</a>
+### uppercase X charref
+<a>&#X41;</a>
+### reference in trailing section
+<a/>&amp;
+### entity bare amp in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "a&b">]><a c="&e;"/>
+### entity bare amp unused !doctypes
+<!DOCTYPE a [<!ENTITY e "a&b">]><a/>
+### entity escaped amp charref in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "x&#38;y">]><a c="&e;"/>
+### entity only amp charref in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "&#38;">]><a c="&e;"/>
+### entity escaped amp charref in content !doctypes
+<!DOCTYPE a [<!ENTITY e "x&#38;y">]><a>&e;</a>
+### entity escaped lt charref in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "x&#60;y">]><a c="&e;"/>
+### entity amp without name !doctypes
+<!DOCTYPE a [<!ENTITY e "a& b">]><a/>
+### entity charref too big !doctypes
+<!DOCTYPE a [<!ENTITY e "&#x110000;">]><a>&e;</a>
+### entity charref zero !doctypes
+<!DOCTYPE a [<!ENTITY e "&#0;">]><a>&e;</a>
+### entity charref zero unused !doctypes
+<!DOCTYPE a [<!ENTITY e "&#0;">]><a/>
+### entity charref bad hex !doctypes
+<!DOCTYPE a [<!ENTITY e "&#xZZ;">]><a/>
+### entity charref no semicolon !doctypes
+<!DOCTYPE a [<!ENTITY e "&#65 ">]><a/>
+### entity value percent !doctypes
+<!DOCTYPE a [<!ENTITY e "50%">]><a/>
+### entity value invalid char !doctypes
+<!DOCTYPE a [<!ENTITY e "x{U+1}">]><a/>
+### xmlns uri leading space
+<a xmlns=" urn:1 "/>
+### xmlns prefixed uri digit
+<a xmlns:p="2005"/>
+### xmlns uri hyphen
+<a xmlns:p="-x"/>
+### xmlns uri dollar
+<a xmlns:p="$x"/>
+### xmlns uri newline
+<a xmlns:p="
+x"/>
+### xmlns uri tab charref
+<a xmlns:p="&#9;x"/>
+### xmlns uri digit used
+<p:a xmlns:p="2005"/>
+### xmlns default uri digit
+<a xmlns="1"/>
+### attribute name colon start
+<a :x="1"/>
+### element name colon start
+<:a/>
+### name 4th edition excludes U+0132
+<a{U+132}/>
+### name 4th edition includes U+0134
+<a{U+134}/>
+### name start U+0132
+<{U+132}/>
+### name long s
+<a{U+17F}/>
+### name U+01C4
+<a{U+1C4}/>
+### name U+0218
+<a{U+218}/>
+### name superscript zero
+<a{U+2070}/>
+### name U+FFFD
+<a{U+FFFD}/>
+### name U+FF00
+<a{U+FF00}/>
+### name non-BMP char
+<a{U+10000}/>
+### name non-BMP start
+<{U+10000}/>
+### name combining start
+<{U+300}/>
+### name combining char
+<a{U+300}/>
+### name middle dot
+<a{U+B7}/>
+### attribute name 4th edition
+<a b{U+2070}="1"/>
+### prefix 4th edition
+<a xmlns:p{U+132}="urn:1"/>
+### PI target 4th edition
+<a><?p{U+FFFD} x?></a>
+### decl standalone maybe
+<?xml version="1.0" standalone="maybe"?><a/>
+### decl unknown pseudo attribute
+<?xml version="1.0" foo="bar"?><a/>
+### decl no space before encoding
+<?xml version="1.0"encoding="UTF-8"?><a/>
+### decl no space before standalone
+<?xml version="1.0" encoding="UTF-8"standalone="yes"?><a/>
+### decl standalone before encoding
+<?xml version="1.0" standalone="yes" encoding="UTF-8"?><a/>
+### decl standalone no
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?><a/>
+### decl spaces around equals
+<?xml version = '1.0' encoding = 'UTF-8' ?><a/>
+### decl empty encoding
+<?xml version="1.0" encoding=""?><a/>
+### decl bad encoding name
+<?xml version="1.0" encoding="1abc"?><a/>
+### decl unterminated encoding
+<?xml version="1.0" encoding="UTF-8?><a/>
+### decl mismatched quotes
+<?xml version="1.0'?><a/>
+### decl space before end
+<?xml version="1.0"? ><a/>
+### decl version unquoted
+<?xml version=1.0?><a/>
+### decl version no equals
+<?xml version "1.0"?><a/>
+### decl encoding no value
+<?xml version="1.0" encoding?><a/>
+### decl standalone only
+<?xml standalone="yes"?><a/>
+### decl tab separated
+<?xml{TAB}version="1.0"{TAB}encoding="UTF-8"?><a/>
+### decl version empty
+<?xml version=""?><a/>
+### decl version 1.0 trailing
+<?xml version="1.0 "?><a/>
+### decl newline before end
+<?xml version="1.0"
+?><a/>
+### PI without target
+<a><? x?></a>
+### PI empty
+<a><??></a>
+### PI without target in prolog
+<? x?><a/>
+### xmlns xml declared
+<a xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:lang="en"/>
+### xmlns xml declared on child
+<a><b xmlns:xml="http://www.w3.org/XML/1998/namespace"/></a>
+### prefixed xmlns attribute dropped
+<a xmlns:p="urn:1" p:xmlns="x"/>
+### xml 1.1 NEL in text
+<?xml version="1.1"?><a>x{U+85}y</a>
+### xml 1.1 CR NEL in text
+<?xml version="1.1"?><a>x{CR}{U+85}y</a>
+### xml 1.1 LS in text
+<?xml version="1.1"?><a>x{U+2028}y</a>
+### xml 1.1 NEL in attribute
+<?xml version="1.1"?><a b="x{U+85}y"/>
+### xml 1.1 charref control
+<?xml version="1.1"?><a>&#1;</a>
+### xml 1.1 charref zero
+<?xml version="1.1"?><a>&#0;</a>
+### xml 1.1 literal control
+<?xml version="1.1"?><a>x{U+1}y</a>
+### xml 1.1 literal C1 control
+<?xml version="1.1"?><a>x{U+80}y</a>
+### xml 1.0 NEL in text
+<a>x{U+85}y{U+2028}z</a>
+### xml 1.0 C1 control in text
+<a>x{U+80}y</a>
+### xml 1.1 name chars
+<?xml version="1.1"?><a{U+132}/>
+### public id trailing space !doctypes
+<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN " "http://my.netscape.com/publish/formats/rss-0.91.dtd"><rss/>
+### public id tab !doctypes
+<!DOCTYPE a PUBLIC "a{TAB}b" "x.dtd"><a/>
+### public id spaces and newlines !doctypes
+<!DOCTYPE a PUBLIC "  a  
+  b {CR}
+c " "x.dtd"><a/>
+### public id invalid char !doctypes
+<!DOCTYPE a PUBLIC "a{b" "x.dtd"><a/>
+### public id single quoted apostrophe !doctypes
+<!DOCTYPE a PUBLIC 'a"b' "x.dtd"><a/>
+### system id CRLF !doctypes
+<!DOCTYPE a SYSTEM "x{CR}
+y.dtd"><a/>
+### system id invalid char !doctypes
+<!DOCTYPE a SYSTEM "x{U+1}.dtd"><a/>
+### public id no space before system !doctypes
+<!DOCTYPE a PUBLIC "p""x.dtd"><a/>
+### doctype system no space !doctypes
+<!DOCTYPE a SYSTEM"x.dtd"><a/>
+### parameter entity declares entity !doctypes
+<!DOCTYPE a [<!ENTITY % p "<!ENTITY e 'x'>"> %p; ]><a>&e;</a>
+### parameter entity undeclared !doctypes
+<!DOCTYPE a [ %p; ]><a/>
+### undeclared entity in replacement text !doctypes
+<!DOCTYPE a [<!ENTITY e "&zz;">]><a>&e;</a>
+### undeclared entity in replacement text attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "&zz;">]><a b="&e;"/>
+### undeclared entity in replacement text unused !doctypes
+<!DOCTYPE a [<!ENTITY e "&zz;">]><a/>
+### external entity in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e SYSTEM "x.ent">]><a b="&e;"/>
+### external entity nested in attribute !doctypes
+<!DOCTYPE a [<!ENTITY x SYSTEM "x.ent"><!ENTITY e "1&x;2">]><a b="&e;"/>
+### entity CRLF in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "x{CR}
+y">]><a b="&e;"/>
+### entity multi-line text in content !doctypes
+<!DOCTYPE a [<!ENTITY e "line1
+line2">]><a>&e;</a>
+### entity CR text in content !doctypes
+<!DOCTYPE a [<!ENTITY e "line1{CR}line2">]><a>&e;</a>
+### entity text ending in newline !doctypes
+<!DOCTYPE a [<!ENTITY e "x
+">]><a>&e;</a>
+### entity text starting with newline !doctypes
+<!DOCTYPE a [<!ENTITY e "
+x">]><a>&e;</a>
+### unterminated internal subset disallowed
+<!DOCTYPE a [
+<!ENTITY e "x">
+### unterminated internal subset !doctypes
+<!DOCTYPE a [
+<!ENTITY e "x">
+### unterminated doctype !doctypes
+<!DOCTYPE a
+### xmlns xmlns prefix
+<a xmlns:xmlns="u"/>
+### default namespace xml uri
+<a xmlns="http://www.w3.org/XML/1998/namespace"/>
+### element prefix xmlns
+<xmlns:a/>
+### element empty local name
+<a:/>
+### xmlns empty prefix
+<a xmlns:="u"/>
+### PI target with colon
+<a><?p:q x?></a>
+### lone surrogate in attribute
+<a x="{U+D800}"/>
+### lone surrogate in comment
+<a><!--{U+D800}--></a>
+### lone surrogate in name
+<a{U+D800}/>
+### lone low surrogate in text
+<a>{U+DC00}</a>
+### entity self recursion !doctypes
+<!DOCTYPE a [<!ENTITY e "&e;">]><a>&e;</a>
+### doctype inside element allowed !doctypes
+<a><!DOCTYPE a></a>
+### line separator in text
+<a>x{U+2028}y{U+2029}</a>
+### entity bare amp in content !doctypes
+<!DOCTYPE a [<!ENTITY e "a&#38;b c">]><a>&e;</a>
+### entity lone amp in content !doctypes
+<!DOCTYPE a [<!ENTITY e "x&#38;">]><a>&e;</a>
+### entity amp space in content !doctypes
+<!DOCTYPE a [<!ENTITY e "&#38; x">]><a>&e;</a>
+### entity charref via amp in content !doctypes
+<!DOCTYPE a [<!ENTITY e "&#38;#65;">]><a>&e;</a>
+### entity invalid charref via amp in content !doctypes
+<!DOCTYPE a [<!ENTITY e "&#38;#0;">]><a>&e;</a>
+### entity invalid charref via amp in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "&#38;#0;">]><a b="&e;"/>
+### entity error on second line in content !doctypes
+<!DOCTYPE a [<!ENTITY e "x
+&zz;">]>
+<a>&e;</a>
+### entity error on second line in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "x
+&zz;">]>
+<a b="&e;"/>
+### entity lt on second line in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "x
+y<">]>
+<a b="&e;"/>
+### entity declaration error on second line !doctypes
+<!DOCTYPE a [<!ENTITY e "x
+&#0;">]>
+<a/>
+### entity nested error line !doctypes
+<!DOCTYPE a [<!ENTITY i "
+&zz;"><!ENTITY e "x
+&i;">]>
+<a b="&e;"/>
+### entity charref CRLF in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "a&#13;&#10;b&#13;c&#9;d">]><a b="&e;"/>
+### entity tab in attribute !doctypes
+<!DOCTYPE a [<!ENTITY e "a{TAB}b">]><a b="&e;"/>
+### parameter entity reference before declaration !doctypes
+<!DOCTYPE a [ %p; <!ENTITY e "x"> ]><a>&e;</a>
+### external parameter entity before declaration !doctypes
+<!DOCTYPE a [<!ENTITY % p SYSTEM "p.ent"> %p; <!ENTITY e "x">]><a>&e;</a>
+### parameter entity reference and undeclared entity !doctypes
+<!DOCTYPE a [ %p; ]><a>&zz;</a>
+### parameter entity used twice !doctypes
+<!DOCTYPE a [<!ENTITY % p "<!ENTITY e 'x'>"> %p; %p; ]><a>&e;</a>
+### parameter entity bad declaration !doctypes
+<!DOCTYPE a [<!ENTITY % p "<!FOO>"> %p; ]><a/>
+### parameter entity in entity value !doctypes
+<!DOCTYPE a [<!ENTITY % p "x"><!ENTITY e "%p;">]><a/>
+### parameter entity no semicolon !doctypes
+<!DOCTYPE a [ %p ]><a/>
+### parameter entity no name !doctypes
+<!DOCTYPE a [ % p; ]><a/>
+### parameter entity declared after use !doctypes
+<!DOCTYPE a [ %p; <!ENTITY % p "<!ENTITY e 'x'>"> ]><a>&e;</a>
+### parameter entity partial declaration !doctypes
+<!DOCTYPE a [<!ENTITY % p "<!ENTITY e"> %p; 'x'>]><a/>
+### parameter entity with spaces and comment !doctypes
+<!DOCTYPE a [<!ENTITY % p " <!-- c --> <!ENTITY e 'x'> "> %p; ]><a>&e;</a>
+### parameter entity nested !doctypes
+<!DOCTYPE a [<!ENTITY % q "<!ENTITY e 'x'>"><!ENTITY % p "&#37;q;"> %p; ]><a>&e;</a>
+### parameter entity recursion !doctypes
+<!DOCTYPE a [<!ENTITY % p "&#37;p;"> %p; ]><a/>
+### parameter entity declares entity used in attribute !doctypes
+<!DOCTYPE a [<!ENTITY % p "<!ENTITY e 'x'>"> %p; ]><a b="&e;"/>
+### parameter entity charref in value !doctypes
+<!DOCTYPE a [<!ENTITY % p "<!ENTITY e '&#38;#65;'>"> %p; ]><a b="&e;">&e;</a>
+### public id empty !doctypes
+<!DOCTYPE a PUBLIC "" "x.dtd"><a/>
+### public id only space !doctypes
+<!DOCTYPE a PUBLIC " " "x.dtd"><a/>
+### public id no space after keyword !doctypes
+<!DOCTYPE a PUBLIC"p" "x.dtd"><a/>
+### public id unquoted !doctypes
+<!DOCTYPE a PUBLIC p "x.dtd"><a/>
+### system id unquoted !doctypes
+<!DOCTYPE a SYSTEM x.dtd><a/>
+### public id unterminated !doctypes
+<!DOCTYPE a PUBLIC "p
+### system id unterminated !doctypes
+<!DOCTYPE a SYSTEM "x.dtd
+### public id percent and apostrophe !doctypes
+<!DOCTYPE a PUBLIC "-//A'B (c)+,./:=?;!*#@$_%//EN" "x.dtd"><a/>
+### system id with markup chars !doctypes
+<!DOCTYPE a SYSTEM "a<b>&c%d]e.dtd"><a/>
+### xml 1.1 charref C1 controls
+<?xml version="1.1"?><a>&#x85;&#x7F;</a>
+### xml 1.1 NEL in comment and PI
+<?xml version="1.1"?><a><!--x{U+85}y--><?p x{U+2028}y?><![CDATA[x{U+85}y]]></a>
+### xml 1.1 LS in attribute
+<?xml version="1.1"?><a b="x{U+2028}y"/>
+### xml 1.1 empty prefix binding
+<?xml version="1.1"?><a xmlns:p="urn:1"><b xmlns:p=""/></a>
+### xml 1.1 DEL literal
+<?xml version="1.1"?><a>x{U+7F}y</a>
+### xml 1.1 charref control in attribute
+<?xml version="1.1"?><a b="&#1;"/>
+### xml 1.1 non-BMP name
+<?xml version="1.1"?><a{U+10000}/>
+### xml 1.1 non-BMP name start
+<?xml version="1.1"?><{U+10000}/>
+### xml 1.1 plane 15 name
+<?xml version="1.1"?><a{U+F0000}/>
+### xml 1.1 NEL in prolog
+<?xml version="1.1"?>{U+85}<a/>
+### xml 1.1 lone surrogate
+<?xml version="1.1"?><a>{U+D800}</a>
+### xml 1.1 C1 control in attribute
+<?xml version="1.1"?><a b="x{U+80}"/>
+### qname digit after colon
+<a:1b xmlns:a="urn:a"/>
+### colon start element with default namespace
+<:a xmlns="urn:x"/>
+### attribute name colon start with value check
+<a :x="1" y="2"/>
+### PI target colon start
+<a><?:p x?></a>
+### decl version single quote
+<?xml version='1.1'?><a>x{U+85}</a>
+### decl only spaces
+<?xml ?><a/>
+### decl unterminated
+<?xml version="1.0"
+### decl invalid char in value
+<?xml version="1.0" encoding="a{U+1}"?><a/>
+### decl encoding first
+<?xml encoding="UTF-8" version="1.0"?><a/>
+### decl standalone misspelled
+<?xml version="1.0" encoding="UTF-8" standalon="yes"?><a/>
+### decl version twice
+<?xml version="1.0" version="1.0"?><a/>
+### decl uppercase name
+<?xml Version="1.0"?><a/>
+### decl version prefix name
+<?xml versionx="1.0"?><a/>
+### many attributes and duplicate
+<a a1="1" a2="2" a3="3" a1="4"/>
+### doctype inside element
+<a><!DOCTYPE a></a>
+### doctype-like markup inside element !doctypes
+<a><!DOCTYPEx></a>
+### unterminated entity value !doctypes
+<!DOCTYPE a [<!ENTITY e "x
+### unterminated entity declaration !doctypes
+<!DOCTYPE a [<!ENTITY e
+### unterminated comment in internal subset !doctypes
+<!DOCTYPE a [<!--
+### eof after internal subset !doctypes
+<!DOCTYPE a [<!ENTITY e "x">]
+### entity declaration junk before end !doctypes
+<!DOCTYPE a [<!ENTITY e "x" junk>]><a/>
+### xml 1.1 entity name JDOM rejects !doctypes
+<?xml version="1.1"?><!DOCTYPE a [<!ENTITY e{U+132} "x">]><a>&e{U+132};</a>
+### entity name with colon !doctypes
+<!DOCTYPE a [<!ENTITY a:b "x">]><a>&a:b;</a>
+### PI and comment before doctype !doctypes
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<!-- c -->
+<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
+<rss/>
+### xml 1.1 doctype name JDOM rejects !doctypes
+<?xml version="1.1"?><!DOCTYPE a{U+132}><a{U+132}/>
+### 10000 attributes parse
+<a{REPEAT 10000| a#=""}/>x
+### 10001 attributes exceed the JDK limit
+<a{REPEAT 10001| a#=""}/>
+### xmlns declarations count toward the attribute limit
+<a{REPEAT 9999| a#=""} xmlns="u" xmlns:p="v"/>
+### 9998 attributes and 2 xmlns parse
+<a{REPEAT 9998| a#=""} xmlns="u" xmlns:p="v"/>x
+### attribute limit on line 2
+<r>
+<a{REPEAT 10001| a#=""}/></r>
+### element name of 1000 chars
+<{REPEAT 1000|x}/>
+### element name of 1001 chars
+<{REPEAT 1001|x}/>
+### prefix of 1001 chars
+<{REPEAT 1001|p}:a/>
+### local name of 1001 chars
+<p:{REPEAT 1001|a}/>
+### prefix and local name of 600 chars each
+<{REPEAT 600|p}:{REPEAT 600|a} xmlns:{REPEAT 600|p}="u"/>
+### attribute name of 1001 chars
+<a {REPEAT 1001|b}=""/>
+### PI target of 1001 chars
+<?{REPEAT 1001|t}?><a/>
+### entity declaration name of 1001 chars !doctypes
+<!DOCTYPE a [<!ENTITY {REPEAT 1001|e} "x">]><a/>
+### entity reference name of 1001 chars
+<a>&{REPEAT 1001|e};</a>
+### doctype name of 1001 chars !doctypes
+<!DOCTYPE {REPEAT 1001|a}><a/>
+### xmlns prefix of 1001 chars
+<a xmlns:{REPEAT 1001|p}="u"/>
+### end tag longer than 1000 chars
+<{REPEAT 1000|a}></{REPEAT 1001|a}>
+### name of 1001 chars in attribute entity !doctypes
+<!DOCTYPE a [<!ENTITY e "&{REPEAT 1001|f};">]><a b="&e;"/>
+### line breaks before version are not counted
+<?xml
+
+ version="1.0"?>
+<a></b>
+### CRLF breaks before version are not counted
+<?xml{CR}
+{CR}
+ version="1.0"?>{CR}
+<a></b>
+### line breaks after the pseudo attributes are counted
+<?xml version="1.0"
+
+?>
+<a></b>
+### line breaks before and after version
+<?xml
+ version="1.0"
+?>
+<a></b>
+### tab and line break before version
+<?xml{TAB}
+ version="1.0"?>
+<a></b>
+### doctype without space !doctypes
+<!DOCTYPE[<!ENTITY e "x">]><a/>
+### doctype without name !doctypes
+<!DOCTYPE ><a/>
+### doctype name starting with a digit !doctypes
+<!DOCTYPE 1a><a/>
+### doctype name followed by subset !doctypes
+<!DOCTYPE a[]><a/>
+### doctype with junk !doctypes
+<!DOCTYPE a junk><a/>
+### doctype with junk after system id !doctypes
+<!DOCTYPE a SYSTEM "x" junk><a/>
+### doctype with qualified name !doctypes
+<!DOCTYPE a:b><a:b xmlns:a="u"/>
+### doctype PUBLIC without space !doctypes
+<!DOCTYPE a PUBLIC"x" "y"><a/>
+### doctype SYSTEM without space !doctypes
+<!DOCTYPE a SYSTEM"x"><a/>
+### doctype public and system ids without space !doctypes
+<!DOCTYPE a PUBLIC "x""y"><a/>
+### doctype public id without system id !doctypes
+<!DOCTYPE a PUBLIC "x"><a/>
+### lone low surrogate in attribute
+<a b="{U+DC00}"/>
+### lone low surrogate in comment
+<a><!--{U+DC00}--></a>
+### lone low surrogate in PI
+<a><?p {U+DC00}?></a>
+### lone low surrogate in CDATA
+<a><![CDATA[{U+DC00}]]></a>
+### lone high surrogate in attribute
+<a b="{U+D800}"/>
+### lone high surrogate in comment
+<a><!--{U+D800}--></a>
+### eof: lt
+<
+### eof: lt bang
+<!
+### eof: lt bang dash
+<!-
+### eof: lt question
+<?
+### eof: lt in content
+<a><
+### eof: lt bang in content
+<a><!
+### eof: lt bang dash in content
+<a><!-
+### eof: lt question in content
+<a><?
+### eof: lt after root
+<a/><
+### eof: lt bang after root
+<a/><!
+### eof: lt bang dash after root
+<a/><!-
+### eof: partial doctype
+<!D
+### eof: lt space
+< 
+### eof: end tag start only
+<a></
+### end tag longer than the start tag
+<a></ab>
+### end tag with junk
+<a></a b>
+### end tag shorter than the start tag
+<ab></a>

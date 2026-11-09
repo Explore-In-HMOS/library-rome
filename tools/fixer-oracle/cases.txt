@@ -1,0 +1,135 @@
+### empty input
+### only whitespace
+  {U+000A}{TAB}{CR}  
+### only a comment
+<!-- c -->
+### comments and whitespace only
+ <!-- a -->{CR}{U+000A}<!-- b -->{TAB}
+### unclosed comment
+<!-- abc &amp; &x
+### comment closed by three dashes is not closed
+<!-- a ---><a>&nbsp;</a>
+### comment with dashes inside
+<!-- a - b -- c --><a>&nbsp;</a>
+### lone lt
+<
+### lt bang
+<!
+### lt bang dash
+<!-
+### lt bang dash dash
+<!--
+### lt bang three dashes
+<!---
+### empty comment
+<!----><a/>
+### bang not a comment
+<!x><a/>
+### bang dash not a comment
+<!-x><a/>
+### doctype first
+<!DOCTYPE rss><rss>&nbsp;</rss>
+### bom before declaration
+{U+FEFF}<?xml version="1.0"?><a>&nbsp; & x</a>
+### whitespace before declaration
+ {TAB}{CR}{U+000A}<?xml version="1.0"?><a>&nbsp;</a>
+### crlf and comment before declaration
+{CR}{U+000A}<!-- hackedString Clean--><?xml version="1.0" ?><hello></hello>
+### leading text
+x &amp y <a/>
+### leading entity is not fixed
+&nbsp;<a>&nbsp;</a>
+### leading ampersand after whitespace
+  &foo <a/>
+### leading ampersand after comment
+<!-- c -->&x <a/>
+### leading cdata is not detected
+<![CDATA[&]]><a>&</a>
+### leading tag with ampersand
+<a&b>&</a&b>
+### named entities
+<a>&nbsp;&copy;&euro;&apos;&amp;&lt;&gt;&quot;&OElig;&mdash;&Pi;&yen;&thetasym;&hellip;</a>
+### unknown entity names
+<a>&foo; &Nbsp; &NBSP; &yexn; &Rhox; &nbsp</a>
+### numeric entities
+<a>&#160; &#x41; &#X41; &#; &#abc; &#2x50; &#9x13; &#38; &#0;</a>
+### digits and letters
+<a>&123abc; &a1; &1;</a>
+### ampersand alone
+<a>a & b</a>
+### double ampersand
+<a>&&</a>
+### triple ampersand
+<a>&&&x;</a>
+### ampersand semicolon
+<a>&;</a>
+### ampersand at eof
+<a>x&
+### entity split at eof
+<a>x&nbsp
+### complete entity at eof
+<a>&nbsp;
+### partial name at eof
+<a>&nb
+### hash at eof
+<a>&#
+### ampersand before tag
+<a>&<b/>&</a>
+### ampersand before newline
+<a>&{U+000A}&{TAB}&{CR}</a>
+### ampersand non ascii
+<a>&é; &{U+1F600}; &ü</a>
+### url query string
+<link>http://x.com/index.html?qp1=1&qp2=2&qp3=3</link>
+### attribute with ampersand
+<a href="x?a=1&b=2&amp;c=&#38;&nbsp;">t</a>
+### ampersand inside tag name
+<a&b>x</a&b>
+### newline inside tag
+<a{U+000A}&b="&c">x</a>
+### tag ended by slash
+<br/&x><a>&x</a>
+### amp amp
+<a>&amp;amp; &amp;&amp;</a>
+### caret and hash names
+<a>&^#; &#^; &a^b;</a>
+### cdata keeps bare ampersand
+<a><![CDATA[a & b &nbsp; &lt; &x &]]> & </a>
+### cdata entity followed by bracket
+<a><![CDATA[&x]]]> & </a>
+### cdata three brackets do not close
+<a><![CDATA[x]]]> & <b> & ]]> & </a>
+### cdata space between brackets
+<a><![CDATA[x] ]> & ]]> & </a>
+### cdata single bracket
+<a><![CDATA[x]> & ]]> & </a>
+### cdata bracket ampersand
+<a><![CDATA[x]&y; ]]> & </a>
+### cdata twice
+<a><![CDATA[<![CDATA[ & ]]> & ]]> & </a>
+### lowercase cdata is not cdata
+<a><![cdata[ & ]]> & </a>
+### cdata with tags inside
+<a><![CDATA[<b>&</b> <c d="&"> ]]> & </a>
+### cdata unclosed at eof
+<a><![CDATA[ & x
+### cdata start at eof
+<a><![CDATA
+### cdata bracket at eof
+<a><![CDATA[ x ]]
+### bracket outside cdata
+<a>]] > ]]> & ]</a>
+### comment inside element with spaces
+<a><!-- a & b &nbsp; --></a>
+### comment inside element without spaces
+<a><!--a&b&nbsp;--></a>
+### processing instruction with ampersand
+<?xml version="1.0"?><?pi a&b ?><a/>
+### doctype internal subset
+<!DOCTYPE x [<!ENTITY e "&#38;"> <!ENTITY f "&">]><x>&e;&f;</x>
+### lt at eof
+<a>x<
+### lt then ampersand
+<a>x<&y</a>
+### mixed realistic item
+<item><title>Tom & Jerry &mdash; &quot;Live&quot;</title><description>&lt;p&gt;Caf&eacute; &amp; bar&nbsp;&rarr;</description></item>
