@@ -1,4 +1,4 @@
-import { SyndFeed, SyndFeedInput, XmlReader } from 'oh_rome';
+import { SyndFeed, SyndFeedInput, XmlReader } from '@explore-in-hmos/oh_rome';
 
 // A feed as it arrived: fetched bytes with their HTTP Content-Type, or text from a sample or the paste box.
 export class FeedSource {

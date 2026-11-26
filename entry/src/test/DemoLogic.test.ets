@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@ohos/hypium';
-import { SyndEntry, SyndFeed } from 'oh_rome';
+import { SyndEntry, SyndFeed } from '@explore-in-hmos/oh_rome';
 import { convertTo, generateFeed, outputTypes, readBack } from '../main/ets/logic/Convert';
 import { DetailRow, entrySections, entrySummary, feedSections, Section } from '../main/ets/logic/Describe';
 import { describeError, ErrorKind } from '../main/ets/logic/Errors';

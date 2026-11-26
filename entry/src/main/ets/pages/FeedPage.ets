@@ -1,4 +1,4 @@
-import { SyndEntry } from 'oh_rome';
+import { SyndEntry } from '@explore-in-hmos/oh_rome';
 import { ActionButton, Note, PageFrame, SectionView, Tile } from '../components/Widgets';
 import { entryKey, entrySummary, feedSections, Section } from '../logic/Describe';
 import { Store } from '../logic/Store';

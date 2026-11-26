@@ -1,10 +1,10 @@
 # oh_rome
 
 [ROME](https://github.com/rometools/rome), the Java RSS/Atom/OPML library, ported to ArkTS for HarmonyOS and published
-on OHPM as **`oh_rome`**.
+on OHPM as **`@explore-in-hmos/oh_rome`**.
 
 ```shell
-ohpm install oh_rome
+ohpm install @explore-in-hmos/oh_rome
 ```
 
 Usage, supported formats and modules, and the differences from ROME are in [`oh_rome/README.md`](oh_rome/README.md).
@@ -13,7 +13,7 @@ Usage, supported formats and modules, and the differences from ROME are in [`oh_
 
 | Directory | What it is |
 |---|---|
-| `oh_rome/` | The library (`oh_rome`), a HAR module, with its unit tests (`src/test`) and on-device tests (`src/ohosTest`) |
+| `oh_rome/` | The library (`@explore-in-hmos/oh_rome`), a HAR module, with its unit tests (`src/test`) and on-device tests (`src/ohosTest`) |
 | `entry/` | Sample app: samples for the main formats and modules, conversion, generation, OPML, real feeds |
 | `fixtures/`, `tools/` | ROME's test feeds and the tools that generate golden tests by running ROME itself |
 | `scripts/` | `check.sh` builds the HAR and the sample app and runs the unit tests (the only trustworthy pass/fail signal); `pack-license.sh` builds the packed license file |

@@ -1,7 +1,7 @@
 # Contributing to oh_rome
 
 ArkTS port of [ROME](https://github.com/rometools/rome) (Java RSS/Atom/OPML library) for HarmonyOS, shipped
-to OHPM as the HAR module `oh_rome`. The `entry` module is the library's sample app.
+to OHPM as `@explore-in-hmos/oh_rome` (the HAR module `oh_rome`). The `entry` module is the library's sample app.
 
 Changes keep the port faithful to ROME.
 

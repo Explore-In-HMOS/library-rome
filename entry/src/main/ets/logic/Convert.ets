@@ -1,4 +1,4 @@
-import { SyndContent, SyndEntry, SyndFeed, SyndFeedInput, SyndFeedOutput, WireFeedOutput } from 'oh_rome';
+import { SyndContent, SyndEntry, SyndFeed, SyndFeedInput, SyndFeedOutput, WireFeedOutput } from '@explore-in-hmos/oh_rome';
 import { describeError, ErrorInfo, ErrorKind } from './Errors';
 import { FeedSource, parseSource } from './Source';
 

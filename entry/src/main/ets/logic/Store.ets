@@ -1,4 +1,4 @@
-import { SyndEntry, SyndFeed } from 'oh_rome';
+import { SyndEntry, SyndFeed } from '@explore-in-hmos/oh_rome';
 import { Subscription } from './Opml';
 import { FeedSource } from './Source';
 

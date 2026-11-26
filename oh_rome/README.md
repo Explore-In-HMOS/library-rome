@@ -11,18 +11,18 @@ conversions with what ROME itself produces, over ROME's own test feeds. Where th
 ## Install
 
 ```shell
-ohpm install oh_rome
+ohpm install @explore-in-hmos/oh_rome
 ```
 
 or in your module's `oh-package.json5`:
 
 ```json5
 "dependencies": {
-  "oh_rome": "^1.0.0"
+  "@explore-in-hmos/oh_rome": "^1.0.0"
 }
 ```
 
-Importing from `oh_rome` registers all parsers, generators, converters and modules.
+Importing from `@explore-in-hmos/oh_rome` registers all parsers, generators, converters and modules.
 
 ## Permissions
 
@@ -34,7 +34,7 @@ None. The library does no I/O: you pass it a string or bytes, as with ROME. An a
 Parse any supported format into the common model:
 
 ```ts
-import { SyndEntry, SyndFeed, SyndFeedInput } from 'oh_rome';
+import { SyndEntry, SyndFeed, SyndFeedInput } from '@explore-in-hmos/oh_rome';
 
 const feed: SyndFeed = new SyndFeedInput().build(xml); // a string, a Uint8Array, or a Document
 console.info(`${feed.feedType}: ${feed.title}`);
@@ -51,7 +51,7 @@ ROME's `new XmlReader(stream, contentType)`:
 
 ```ts
 import { http } from '@kit.NetworkKit';
-import { SyndFeed, SyndFeedInput, XmlReader } from 'oh_rome';
+import { SyndFeed, SyndFeedInput, XmlReader } from '@explore-in-hmos/oh_rome';
 
 async function load(url: string): Promise<SyndFeed | null> {
   const request = http.createHttp();
@@ -73,7 +73,7 @@ async function load(url: string): Promise<SyndFeed | null> {
 Write it out, in the same format or another:
 
 ```ts
-import { SyndFeedOutput } from 'oh_rome';
+import { SyndFeedOutput } from '@explore-in-hmos/oh_rome';
 
 feed.feedType = 'atom_1.0';
 const atom: string = new SyndFeedOutput().outputString(feed);
@@ -87,7 +87,7 @@ description, so writing it as `rss_2.0` throws `FeedException: Invalid rss_2.0 f
 Build a feed from scratch:
 
 ```ts
-import { SyndContent, SyndEntry, SyndFeed, SyndFeedOutput } from 'oh_rome';
+import { SyndContent, SyndEntry, SyndFeed, SyndFeedOutput } from '@explore-in-hmos/oh_rome';
 
 const feed = new SyndFeed();
 feed.feedType = 'rss_2.0';
@@ -109,7 +109,7 @@ const xml: string = new SyndFeedOutput().outputString(feed);
 Read module data from an entry:
 
 ```ts
-import { EntryInformation, ITunes, MediaEntryModule, MediaModule } from 'oh_rome';
+import { EntryInformation, ITunes, MediaEntryModule, MediaModule } from '@explore-in-hmos/oh_rome';
 
 const itunes = entry.getModule(ITunes.URI);
 if (itunes instanceof EntryInformation) {
@@ -124,7 +124,7 @@ if (media instanceof MediaEntryModule) {
 Work with the format's own model through `WireFeedInput` and `WireFeedOutput`; OPML documents come back as `Opml`:
 
 ```ts
-import { Channel, Opml, WireFeedInput } from 'oh_rome';
+import { Channel, Opml, WireFeedInput } from '@explore-in-hmos/oh_rome';
 
 const channel = new WireFeedInput().build(rssXml) as Channel;
 const opml = new WireFeedInput().build(opmlXml) as Opml;

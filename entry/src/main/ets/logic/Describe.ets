@@ -3,7 +3,7 @@ import {
   ITunesCategory, LineString, MediaContent, MediaEntryModule, MediaModule, Module, Point, PodloveSimpleChapterModule,
   Polygon, SimpleChapter, Slash, SyModule, SyndCategory, SyndEnclosure, SyndEntry, SyndFeed, SyndPerson, ThreadingModule,
   Thumbnail, UrlReference
-} from 'oh_rome';
+} from '@explore-in-hmos/oh_rome';
 import { formatBytes, formatDate, plainText } from './Text';
 
 export class DetailRow {

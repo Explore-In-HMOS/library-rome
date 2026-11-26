@@ -1,4 +1,4 @@
-import { Opml, OpmlAttribute, Outline, WireFeedInput, WireFeedOutput } from 'oh_rome';
+import { Opml, OpmlAttribute, Outline, WireFeedInput, WireFeedOutput } from '@explore-in-hmos/oh_rome';
 
 export class Subscription {
   readonly name: string;

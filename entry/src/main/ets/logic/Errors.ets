@@ -1,4 +1,4 @@
-import { ParsingFeedException } from 'oh_rome';
+import { ParsingFeedException } from '@explore-in-hmos/oh_rome';
 
 // What went wrong, sorted so a by-hand test can tell a library bug from a network or feed problem.
 export enum ErrorKind {

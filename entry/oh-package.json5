@@ -6,7 +6,7 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "oh_rome": "file:../oh_rome"
+    "@explore-in-hmos/oh_rome": "file:../oh_rome"
   }
 }
 
